@@ -1,0 +1,14 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+  "compilerOptions": {
+    // Enforce case sensitivity across OS (Windows vs Linux)
+    "forceConsistentCasingInFileNames": true,
+
+    // Enable full type checking (recommended)
+    "strict": true
+  }
+}

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import type { Course } from "../../types/course/course.types";
 import { useSubscription } from "../../hooks/course/useSubscription"; // <-- Subscription hook
 import CustomMessage from "../Custom/CustomMessage";
+import AnimatedCard from "../Common/AnimatedCard";
 
 interface CourseCardProps {
   course: Course;
@@ -22,6 +23,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
   };
 
   return (
+    <AnimatedCard className="!bg-transparent !shadow-none">
     <div className="bg-white dark:bg-primary rounded-2xl shadow-lg overflow-hidden">
       <img
         src={course.thumbnailUrl || "https://via.placeholder.com/400x200"}
@@ -67,6 +69,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
         )}
       </div>
     </div>
+    </AnimatedCard>
   );
 };
 

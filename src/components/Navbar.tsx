@@ -146,7 +146,7 @@ const Navbar = () => {
           <li className="relative">
             <button
               onClick={() => setShowExploreDropdown((prev) => !prev)}
-              className="flex items-center gap-1 text-base font-medium bg-dime dark:bg-dark p-2 rounded-md "
+              className="flex items-center  gap-1 text-base font-medium bg-dime dark:bg-dark p-2 rounded-md "
             >
               <MdOutlineExplore size={22} />
               Explore

@@ -15,6 +15,7 @@ export const getAllCourses = (): Promise<Course[]> =>
 export const getCourseById = (id: string): Promise<Course> =>
   safeApiCall(async () => {
     const { data } = await api.get<Course>(`${API_URL}/${id}`);
+    console.log(data)
     return data;
   }, "Failed to fetch course");
 

@@ -77,6 +77,7 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({
             />
             {/* Progress Ring (Accent) */}
             <circle
+
               cx="50"
               cy="50"
               r={radius}

@@ -2,19 +2,32 @@ import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSubmission } from "../../../hooks/code/useSubmission";
 import { useUser } from "../../../hooks/user/userUser";
+import CustomLoading from "../../Common/CustomLoading";
+import CustomMessage from "../../Custom/CustomMessage";
 
 const SolutionsTab = () => {
   const { slug } = useParams<{ slug: string }>();
-  const { submissions = [], loading, error, fetchSubmissionBySlug } = useSubmission();
+  const {
+    submissions = [],
+    loading,
+    error,
+    fetchSubmissionBySlug,
+  } = useSubmission();
   const { fetchUserNameById } = useUser();
 
   const [selectedLanguage, setSelectedLanguage] = useState("All");
   const [userNames, setUserNames] = useState<Record<string, string>>({});
   const [modalCode, setModalCode] = useState<string | null>(null);
-  useEffect(() => {
-    if (slug) fetchSubmissionBySlug(slug);
-  }, [fetchSubmissionBySlug, slug]);
+  const [hasFetchedOnce, setHasFetchedOnce] = useState(false); // ✅ add
 
+  // ✅ Only fetch on mount or slug change
+  useEffect(() => {
+    if (slug && !hasFetchedOnce) {
+      fetchSubmissionBySlug(slug).finally(() => setHasFetchedOnce(true));
+    }
+  }, [slug, fetchSubmissionBySlug, hasFetchedOnce]);
+
+  // ✅ Resolve usernames after data is loaded
   useEffect(() => {
     const loadUserNames = async () => {
       const unknownIds = Array.from(new Set(submissions.map((s) => s.user))).filter(
@@ -37,8 +50,10 @@ const SolutionsTab = () => {
       setUserNames((prev) => ({ ...prev, ...Object.fromEntries(entries) }));
     };
 
-    loadUserNames();
-  }, [fetchUserNameById, submissions, userNames]);
+    if (hasFetchedOnce && submissions.length > 0) {
+      loadUserNames();
+    }
+  }, [fetchUserNameById, submissions, userNames, hasFetchedOnce]);
 
   const languages = useMemo(() => {
     const unique = new Set(submissions.map((s) => s.language));
@@ -51,8 +66,9 @@ const SolutionsTab = () => {
       : submissions.filter((s) => s.language === selectedLanguage);
   }, [submissions, selectedLanguage]);
 
-  if (loading) return <p>Loading community solutions...</p>;
-  if (error) return <p className="text-red-500">Error: {error}</p>;
+  // ✅ prevent flicker or empty UI before data is loaded
+  if (!hasFetchedOnce || loading) return <CustomLoading message="Loading community solutions..." />;
+  if (error) return <CustomMessage type="error" message={error} />
 
   return (
     <div className="space-y-6">
@@ -95,8 +111,8 @@ const SolutionsTab = () => {
                   <td className="p-2 border">{submission.language}</td>
                   <td className="p-2 border">{submission.status}</td>
                   <td className="p-2 border">
-  {submission.executionTime ? `${submission.executionTime} ms` : "-"}
-</td>
+                    {submission.executionTime ? `${submission.executionTime} ms` : "-"}
+                  </td>
                   <td className="p-2 border">
                     <button
                       className="text-blue-600 hover:underline"
@@ -112,6 +128,7 @@ const SolutionsTab = () => {
         </div>
       )}
 
+      {/* Modal for viewing code */}
       {modalCode && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white dark:bg-zinc-900 rounded-lg p-4 w-full max-w-2xl max-h-[80vh] overflow-y-auto relative">

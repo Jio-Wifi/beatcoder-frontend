@@ -73,6 +73,7 @@ const UpdateTestCase: React.FC = () => {
           />
           <div className="flex items-center gap-2">
             <input
+            aria-label="publicTest"
               type="checkbox"
               checked={formData.isPublic}
               onChange={(e) => setFormData({ ...formData, isPublic: e.target.checked })}

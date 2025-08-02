@@ -87,6 +87,7 @@ const CertificateList: React.FC = () => {
                   </td>
                   <td className="p-3 border-b">
                     <button
+                    aria-label="delete"
                       onClick={() => deleteCertificate(cert._id)}
                       className="text-red-500 hover:text-red-700"
                     >

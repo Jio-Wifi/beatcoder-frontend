@@ -1,4 +1,3 @@
-// src/pages/Admin/Progress/ProgressTracker.tsx
 import React, { useEffect, useState, useMemo } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useProgress } from "../../../hooks/course/useProgress";

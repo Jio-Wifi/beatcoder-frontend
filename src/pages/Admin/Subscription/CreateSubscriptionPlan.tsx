@@ -84,6 +84,7 @@ const CreateSubscriptionPlan: React.FC = () => {
           <div>
             <label className="block font-medium mb-1">Interval</label>
             <select
+            aria-label="interval"
               name="interval"
               value={formData.interval}
               onChange={handleChange}

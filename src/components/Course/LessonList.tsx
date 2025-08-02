@@ -52,7 +52,7 @@ const LessonList: React.FC<LessonListProps> = ({
         )}
       </div>
 
-      <ul className="space-y-3">
+      <ul className="space-y-3 sticky overflow-y-auto max-h-screen">
   {sortedLessons.map((lesson) => (
     <li key={lesson._id}>
       <button

@@ -102,34 +102,35 @@ const Topic: React.FC = () => {
             {loading && <p className="text-gray-500">Loading problems...</p>}
             {error && <p className="text-red-500">{error}</p>}
 
-            <ul className="space-y-4">
-              {filteredProblems.length > 0 ? (
-                filteredProblems.map((q) => (
-                  <CustomLink
-                    key={q._id}
-                    to={`/problems/${slugify(q.title)}/description`}
-                    className="block text-secondary dark:text-dime font-semibold"
-                  >
-                    <li className="p-4 border rounded-lg bg-white dark:bg-primary dark:border-gray-700 flex justify-between hover:bg-accent/10 dark:hover:bg-accent/20 transition">
-                      <span>{q.title}</span>
-                      <span
-                        className={`text-xs px-2 py-1 rounded ${
-                          q.difficulty === "easy"
-                            ? "text-green-600"
-                            : q.difficulty === "medium"
-                            ? "text-yellow-600"
-                            : "text-red-600"
-                        }`}
-                      >
-                        {q.difficulty.toUpperCase()}
-                      </span>
-                    </li>
-                  </CustomLink>
-                ))
-              ) : (
-                <p className="text-gray-500">No problems found for this topic.</p>
-              )}
-            </ul>
+           {filteredProblems.length > 0 ? (
+  <ul className="space-y-4">
+    {filteredProblems.map((q) => (
+      <CustomLink
+        key={q._id}
+        to={`/problems/${slugify(q.title)}/description`}
+        className="block text-secondary dark:text-dime font-semibold"
+      >
+        <li className="p-4 border rounded-lg bg-white dark:bg-primary dark:border-gray-700 flex justify-between hover:bg-accent/10 dark:hover:bg-accent/20 transition">
+          <span>{q.title}</span>
+          <span
+            className={`text-xs px-2 py-1 rounded ${
+              q.difficulty === "easy"
+                ? "text-green-600"
+                : q.difficulty === "medium"
+                ? "text-yellow-600"
+                : "text-red-600"
+            }`}
+          >
+            {q.difficulty.toUpperCase()}
+          </span>
+        </li>
+      </CustomLink>
+    ))}
+  </ul>
+) : (
+  <p className="text-gray-500">No problems found for this topic.</p>
+)}
+
           </div>
         </main>
       </div>

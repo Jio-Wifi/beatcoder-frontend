@@ -1,4 +1,3 @@
-// src/components/admin/OverviewCarousel.tsx
 import React, { useEffect, useRef, type JSX } from "react";
 import type { AnalyticsOverview } from "../../../types/course/analyatic.types";
 import { Card, CardContent } from "../../../components/ui/Card";
@@ -120,13 +119,13 @@ const OverviewCarousel: React.FC<OverviewCarouselProps> = ({ overview }) => {
 
   return (
     <div className="max-w-[1120px] overflow-x-hidden" ref={scrollRef}>
-      <div className="flex gap-4 px-4 py-6 min-w-max">
+      <div className="flex flex-col md:flex-row gap-4 px-4 py-6 min-w-max">
         {visibleMetrics.map((key) => {
           const { label, icon, gradient } = overviewConfig[key];
           return (
             <Card
               key={key}
-              className={`flex-shrink-0 ${gradient} text-white rounded-xl shadow-lg w-56 hover:shadow-xl transition-all`}
+              className={`flex-shrink-0 w-full md:w-[250px] ${gradient} text-white rounded-xl shadow-lg w-56 hover:shadow-xl transition-all`}
             >
               <CardContent className="flex flex-col items-center py-6 space-y-3">
                 <div>{icon}</div>

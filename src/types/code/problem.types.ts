@@ -37,12 +37,12 @@ export interface Problem {
   slug: string;
   description: string;
   difficulty: Difficulty;
-  testCases: string[];
+  testCases?: string[];
   constraints?: string;
-  subject: Subject;
-  starterCode: Record<string, string>;
-  videoSolutions: VideoSolution[];
-  createdAt: string;
+  subject?: Subject;
+  starterCode?: Record<string, string>;
+  videoSolutions?: VideoSolution[];
+  createdAt?: string;
 }
 
 export type ProblemInput = Omit<Problem, "_id" | "createdAt" | "videoSolutions"> & {

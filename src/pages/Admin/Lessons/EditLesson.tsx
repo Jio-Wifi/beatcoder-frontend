@@ -126,6 +126,7 @@ const EditLesson: React.FC = () => {
         <div>
           <label className="block mb-1 font-medium">Select Course</label>
           <select
+          aria-label="course"
             className="w-full p-2 rounded bg-white dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600"
             value={course}
             onChange={(e) => setCourse(e.target.value)}
@@ -183,6 +184,7 @@ const EditLesson: React.FC = () => {
         <div>
           <label className="block mb-1 font-medium">Video Type</label>
           <select
+          aria-label="videoType"
             className="w-full p-2 rounded bg-white dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600"
             value={videoType}
             onChange={(e) =>
@@ -198,6 +200,7 @@ const EditLesson: React.FC = () => {
         {/* Free Preview Checkbox */}
         <div className="flex items-center">
           <input
+          aria-label="preview"
             type="checkbox"
             checked={isFreePreview}
             onChange={(e) => setIsFreePreview(e.target.checked)}

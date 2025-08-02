@@ -83,8 +83,9 @@ const AdminAnalytics: React.FC = () => {
   return (
     <div className="p-6 mx-auto text-gray-900 dark:text-gray-100 space-y-10">
       {/* Overview Cards Carousel */}
+     <div>
       <OverviewCarousel overview={overview} />
-
+      </div>
       {/* Doughnut Chart */}
       <TiltTorchCard className="!shadow-none">
         <canvas ref={canvasRef} className="hidden" />

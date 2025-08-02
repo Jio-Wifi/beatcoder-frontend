@@ -126,6 +126,7 @@ const AddLesson: React.FC = () => {
             Select Course
           </label>
           <select
+          aria-label="course"
             className="w-full p-3 rounded-lg border shadow-sm 
                bg-white text-gray-900 
                border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary
@@ -173,6 +174,7 @@ const AddLesson: React.FC = () => {
         <div>
           <label className="block mb-1 font-medium">Video Type</label>
           <select
+          aria-label="videoType"
             className="w-full border p-2 rounded 
                        bg-white text-gray-900 
                        dark:bg-dark dark:text-gray-100 
@@ -190,6 +192,7 @@ const AddLesson: React.FC = () => {
 
         <div className="flex items-center">
           <input
+          aria-label="checkbox"
             type="checkbox"
             checked={isFreePreview}
             onChange={(e) => setIsFreePreview(e.target.checked)}

@@ -49,7 +49,7 @@ const CourseDetails: React.FC = () => {
     return <CustomMessage type="info" message="Course not found." />;
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-dark text-gray-900 dark:text-white p-6">
+    <div className="min-h-screen bg-dime dark:bg-dark text-gray-900 dark:text-white p-6">
       <div className="grid grid-cols-1 md:flex gap-2">
         {/* Left Panel - Lesson List */}
         <LessonList

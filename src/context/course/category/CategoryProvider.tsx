@@ -9,6 +9,7 @@ import {
 } from "../../../services/course/category.service";
 import type { Category } from "../../../types/course/category.types";
 import useAuth from "../../../hooks/auth/useAuth";
+import PageSkeleton from "../../../components/Common/PageSkeleton";
 
 export const CategoryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { hasRefreshed, isLoggedIn, user } = useAuth();
@@ -118,7 +119,7 @@ export const CategoryProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, [fetchCategories]);
 
   if (!hasRefreshed) {
-    return <div className="p-4 text-center">Checking session...</div>;
+    return <PageSkeleton />
   }
 
   return (

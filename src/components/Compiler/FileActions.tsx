@@ -15,7 +15,7 @@ const FileActions: React.FC<FileActionsProps> = ({
   onCreate,
 }) => {
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex flex-wrap items-center gap-4">
       <select
       aria-label="language"
         className="border rounded bg-white text-secondary dark:text-dime px-4 py-2 dark:bg-primary"

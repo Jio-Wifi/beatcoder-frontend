@@ -1,4 +1,3 @@
-// src/constants/adminLinks.tsx
 import { MdDashboard, MdLibraryBooks, MdRateReview, MdAssessment, MdCategory, MdCode, MdOutlinePeople } from "react-icons/md";
 import { RiBook2Fill } from "react-icons/ri";
 import { AiOutlineFileSearch } from "react-icons/ai";

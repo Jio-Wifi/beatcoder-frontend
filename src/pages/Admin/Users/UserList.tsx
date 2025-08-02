@@ -100,6 +100,7 @@ const UserList: React.FC = () => {
                     {/* Delete Button */}
                     <td className="p-3 border-b text-center">
                       <button
+                      aria-label="deletAdminUser"
                         onClick={() => deleteAdminUser(user._id)}
                         className="text-red-500 hover:underline"
                       >

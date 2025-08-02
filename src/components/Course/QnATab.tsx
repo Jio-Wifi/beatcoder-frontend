@@ -18,7 +18,7 @@ const QnATab: React.FC = () => {
   const [editText, setEditText] = useState("");
   const { user } = useUser()
 
-  const userId = `${user?.name}`; // Replace with actual user ID from auth system
+  const userId = `${user?.name}`;
 
   // Load from localStorage
   useEffect(() => {

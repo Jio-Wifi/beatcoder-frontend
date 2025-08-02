@@ -1,4 +1,3 @@
-// src/pages/Admin/Category/EditCategory.tsx
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useCategory } from "../../../hooks/course/useCategory";

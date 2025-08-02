@@ -143,7 +143,7 @@ const BasicInfo = ({ user }: Props) => {
                   className="bg-secondary text-white px-3 py-1 rounded-full text-sm flex items-center gap-2"
                 >
                   {skill}
-                  <button onClick={() => removeSkill(skill)}>
+                  <button aria-label="removeSkill" onClick={() => removeSkill(skill)}>
                     <IoMdClose size={12} />
                   </button>
                 </span>
@@ -194,6 +194,7 @@ const BasicInfo = ({ user }: Props) => {
             <>
               {isGender ? (
                 <select
+                aria-label="gender"
                   value={form.gender}
                   onChange={(e) =>
                     setForm({ ...form, gender: e.target.value as Gender })
@@ -211,6 +212,7 @@ const BasicInfo = ({ user }: Props) => {
                 </select>
               ) : isBirthday ? (
                 <input
+                aria-label="gender"
                   type="date"
                   value={form.birthday}
                   onChange={(e) =>

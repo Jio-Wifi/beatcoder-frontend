@@ -170,6 +170,7 @@ const TestCaseSection = ({ problemId }: Props) => {
                 <div className="text-sm space-y-2">
                   <label className="text-gray-500 dark:text-gray-400 font-medium">Input:</label>
                   <textarea
+                  aria-label="editinput"
                     value={editInputs[tc._id] || ""}
                     onChange={(e) =>
                       setEditInputs((prev) => ({
@@ -182,6 +183,7 @@ const TestCaseSection = ({ problemId }: Props) => {
                   />
                   <label className="text-gray-500 dark:text-gray-400 font-medium">Expected Output:</label>
                   <textarea
+                  aria-label="editOuput"
                     value={editOutputs[tc._id] || ""}
                     onChange={(e) =>
                       setEditOutputs((prev) => ({

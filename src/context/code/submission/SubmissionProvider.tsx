@@ -141,19 +141,27 @@ export const SubmissionProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     }
   }, []);
 
- const createSubmission = useCallback(async (input: SubmissionInput) => {
-  setLoading(true);
-  setError(null);
-  try {
-    const newSubmission = await createSubmissionApi(input);
-    setSubmissions((prev) => [...(prev ?? []), newSubmission]);
-  } catch (err) {
-    setError(err instanceof Error ? err.message : "Failed to create submission");
-  } finally {
-    setLoading(false);
-  }
-}, []);
+const createSubmission = useCallback(
+  async (input: SubmissionInput, slug?: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const newSubmission = await createSubmissionApi(input);
+      setSubmissions((prev) => [...(prev ?? []), newSubmission]);
 
+      // ✅ Re-fetch latest for solution tab if slug is passed
+      if (slug) {
+        const res = await fetchSubmissionsBySlugApi(slug);
+        setSubmissions(res.submissions);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to create submission");
+    } finally {
+      setLoading(false);
+    }
+  },
+  []
+);
 
   const runCode = useCallback(async (input: SubmissionInput) => {
     setLoading(true);

@@ -38,7 +38,7 @@ const UpdateProblem: React.FC = () => {
     description: "",
     difficulty: "easy" as Difficulty,
     subject: "Arrays" as Subject, // Default subject until fetched
-    constraints: "",
+    constraints: "" as string,
   });
   const [success, setSuccess] = useState<string | null>(null);
 
@@ -113,6 +113,7 @@ const UpdateProblem: React.FC = () => {
 
           {/* Difficulty Selector */}
           <select
+          aria-label="difficulty"
             name="difficulty"
             value={formData.difficulty}
             onChange={(e) => setFormData({ ...formData, difficulty: e.target.value as Difficulty })}
@@ -125,6 +126,7 @@ const UpdateProblem: React.FC = () => {
 
           {/* Subject Selector (New) */}
           <select
+          aria-label="subject"
             name="subject"
             value={formData.subject}
             onChange={(e) => setFormData({ ...formData, subject: e.target.value as Subject })}

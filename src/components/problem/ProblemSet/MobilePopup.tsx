@@ -18,7 +18,7 @@ const MobilePopup = ({ popup, setPopup, date, setDate }: MobilePopupProps) => {
         <h2 className="text-lg font-bold text-primary dark:text-white">
           {popup === "calendar" ? "Calendar" : "Trending Companies"}
         </h2>
-        <button onClick={() => setPopup(null)} className="text-danger">
+        <button aria-label="close" onClick={() => setPopup(null)} className="text-danger">
           <IoClose size={22} />
         </button>
       </div>

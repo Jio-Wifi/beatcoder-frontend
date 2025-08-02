@@ -117,6 +117,7 @@ const EditCourse: React.FC = () => {
             Description
           </label>
           <textarea
+          aria-label="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             rows={4}
@@ -155,6 +156,7 @@ const EditCourse: React.FC = () => {
         {/* Published Checkbox */}
         <div className="flex items-center gap-2">
           <input
+          aria-label="published"
             type="checkbox"
             checked={isPublished}
             onChange={(e) => setIsPublished(e.target.checked)}

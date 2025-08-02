@@ -89,6 +89,7 @@ const EditQuiz: React.FC = () => {
           <div>
             <label className="block font-medium mb-1">Select Course</label>
             <select
+             aria-label="course"
               name="course"
               value={formData.course}
               onChange={(e) => setFormData({ ...formData, course: e.target.value })}

@@ -7,6 +7,7 @@ import {
 } from "../../../services/course/analyatic.service";
 import { AnalyticsContext } from "./AnalyaticContext";
 import useAuth from "../../../hooks/auth/useAuth";
+import PageSkeleton from "../../../components/Common/PageSkeleton";
 
 export const AnalyticsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { hasRefreshed, isLoggedIn, user } = useAuth();
@@ -67,7 +68,7 @@ export const AnalyticsProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   }, [hasRefreshed, isLoggedIn, user, getOverview]);
 
   if (!hasRefreshed) {
-    return <div className="p-4 text-center">Checking session...</div>;
+    return <PageSkeleton />;
   }
 
   return (

@@ -10,14 +10,26 @@ import MobilePopup from "../../components/problem/ProblemSet/MobilePopup";
 const ProblemSet = () => {
   const [date, setDate] = useState(new Date());
   const [searchQuery, setSearchQuery] = useState("");
+  const [difficulty, setDifficulty] = useState(""); // <-- new difficulty filter
   const [popup, setPopup] = useState<"calendar" | "trending" | null>(null);
 
   const { problems, loading, error } = useProblem();
 
-  // Filter only by title for search, but results will use `slug` for links
-  const filteredQuestions = problems.filter((q) =>
-    q.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  console.log(problems)
+
+  const [selectedTopic, setSelectedTopic] = useState("All");
+
+const filteredQuestions = problems.filter((q) =>
+  q.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
+  (difficulty ? q.difficulty.toLowerCase() === difficulty.toLowerCase() : true) &&
+  (selectedTopic === "All" ? true : q.subject?.toLowerCase() === selectedTopic.toLowerCase())
+);
+
+//   // Apply search and difficulty filters
+// const filteredQuestions = problems.filter((q) =>
+//   q.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
+//   (difficulty ? q.difficulty.toLowerCase() === difficulty.toLowerCase() : true)
+// );
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-5 gap-4 p-4 bg-dime dark:bg-dark text-dark dark:text-white min-h-screen relative">
@@ -27,12 +39,17 @@ const ProblemSet = () => {
       </aside>
 
       {/* Center Content */}
-      <CenterContent
+<CenterContent
   searchQuery={searchQuery}
   setSearchQuery={setSearchQuery}
+  difficulty={difficulty}
+  setDifficulty={setDifficulty}
   loading={loading}
   error={error}
-  filteredQuestions={filteredQuestions} // full Problem[]
+  filteredQuestions={filteredQuestions}
+  problems={problems}
+  selectedTopic={selectedTopic}
+  setSelectedTopic={setSelectedTopic}
 />
 
 

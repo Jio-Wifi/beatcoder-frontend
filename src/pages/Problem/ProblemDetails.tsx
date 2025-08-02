@@ -19,7 +19,11 @@ const ProblemDetails = () => {
   const { slug, tab = "description" } = useParams();
   const navigate = useNavigate();
   const { problems, loading: problemLoading, error: problemError } = useProblem();
-  const { createSubmission, error: submissionError } = useSubmission();
+  const {
+    createSubmission,
+    error: submissionError,
+    fetchSubmissionBySlug, // ✅ Added
+  } = useSubmission();
   const { isLoggedIn } = useAuth();
 
   const [activeTab, setActiveTab] = useState(tab.toLowerCase());
@@ -34,7 +38,7 @@ const ProblemDetails = () => {
   const [message, setMessage] = useState<string | null>(null);
   const [messageType, setMessageType] = useState<"success" | "error">("success");
 
-  const [runResult, setRunResult] = useState<RunResult | null>(null); // For result modal
+  const [runResult, setRunResult] = useState<RunResult | null>(null);
 
   const problem = problems.find((p) => p.slug === slug);
 
@@ -102,10 +106,8 @@ const ProblemDetails = () => {
       setRunResult({
         ...result,
         language,
-        memory: result.memory ?? Math.floor(Math.random() * 500 + 50), // Simulated if missing
+        memory: result.memory ?? Math.floor(Math.random() * 500 + 50),
       });
-
-      // Auto-close after 7 sec
       setTimeout(() => setRunResult(null), 7000);
     } catch {
       setMessage("❌ Run failed.");
@@ -134,6 +136,11 @@ const ProblemDetails = () => {
       const result = await runCodeApi({ code, language, problem: problem._id });
       await createSubmission({ code, language, problem: problem._id });
 
+      // ✅ Refresh solutions after submission
+      if (problem.slug) {
+        await fetchSubmissionBySlug(problem.slug);
+      }
+
       setRunResult({
         ...result,
         language,
@@ -160,14 +167,13 @@ const ProblemDetails = () => {
       />
 
       <div
-  className="bg-gray-50 dark:bg-dark flex flex-col h-full relative dynamic-width"
-  ref={(el) => {
-    if (el) {
-      el.style.setProperty("--dynamic-width", `${100 - leftWidth}%`);
-    }
-  }}
->
-
+        className="bg-gray-50 dark:bg-dark flex flex-col h-full relative dynamic-width"
+        ref={(el) => {
+          if (el) {
+            el.style.setProperty("--dynamic-width", `${100 - leftWidth}%`);
+          }
+        }}
+      >
         <div className="flex-1 custom-scroll overflow-y-auto p-4">
           <CodeEditorPanel
             problem={problem}
@@ -196,7 +202,7 @@ const ProblemDetails = () => {
           </button>
         </div>
 
-        {/* Message Popup (Errors/Success) */}
+        {/* Message Popup */}
         {message && (
           <div className="absolute bottom-24 right-5 z-50">
             <CustomMessage
@@ -213,7 +219,7 @@ const ProblemDetails = () => {
           </div>
         )}
 
-        {/* Live Run Result Modal */}
+        {/* Result Modal */}
         {runResult && (
           <RunResultModal
             result={runResult}

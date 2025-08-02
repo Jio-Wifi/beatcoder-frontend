@@ -155,6 +155,7 @@ const CreateCourse: React.FC = () => {
 
         <div className="flex items-center gap-2">
           <input
+          aria-label="public couse"
             type="checkbox"
             name="isPublished"
             checked={formData.isPublished}

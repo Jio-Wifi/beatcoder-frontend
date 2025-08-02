@@ -1,6 +1,7 @@
 import { FaLinkedin, FaTwitter, FaGithub } from "react-icons/fa";
 import CustomHeading from "../../components/Custom/CustomHeading";
 import CustomTitle from "../../components/Custom/CustomTitle";
+import { Link } from "react-router-dom";
 
 const testimonials = [
   {
@@ -60,19 +61,19 @@ const OtherSay = () => {
               </h4>
               <div className="flex space-x-2">
                 {t.socials.linkedin && (
-                  <a href={t.socials.linkedin} target="_blank" rel="noopener noreferrer">
+                  <Link to={t.socials.linkedin} target="_blank" rel="noopener noreferrer">
                     <FaLinkedin size={18} className="text-blue-600 hover:scale-110 transition" />
-                  </a>
+                  </Link>
                 )}
                 {t.socials.twitter && (
-                  <a href={t.socials.twitter} target="_blank" rel="noopener noreferrer">
+                  <Link to={t.socials.twitter} target="_blank" rel="noopener noreferrer">
                     <FaTwitter size={18} className="text-sky-400 hover:scale-110 transition" />
-                  </a>
+                  </Link>
                 )}
                 {t.socials.github && (
-                  <a href={t.socials.github} target="_blank" rel="noopener noreferrer">
+                  <Link to={t.socials.github} target="_blank" rel="noopener noreferrer">
                     <FaGithub size={18} className="text-gray-800 dark:text-white hover:scale-110 transition" />
-                  </a>
+                  </Link>
                 )}
               </div>
             </div>

@@ -78,3 +78,21 @@
   background-color: #1e1e2f;
   color: white;
 }
+
+
+/* // tilttourch  */
+
+/* TiltTorchCard.css */
+.tilt-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.3s ease;
+  border-radius: 1rem; /* Tailwind: rounded-2xl */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); /* shadow-2xl */
+  padding: 1rem; /* p-4 */
+  background-color: white;
+}
+
+.tilt-card.dark {
+  background-color: var(--tw-bg-opacity, #1f2937); /* Tailwind: dark:bg-primary fallback */
+}

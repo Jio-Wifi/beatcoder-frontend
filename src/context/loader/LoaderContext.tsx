@@ -1,4 +1,3 @@
-// src/context/loader/loader.context.tsx
 import { createContext } from "react";
 import type { LoaderContextProps } from "../../types/loader.types";
 

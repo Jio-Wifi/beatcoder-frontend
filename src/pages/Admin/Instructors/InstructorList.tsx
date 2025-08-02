@@ -77,6 +77,7 @@ const InstructorList: React.FC = () => {
                       <AiOutlineEdit size={20} />
                     </Link>
                     <button
+                    aria-label="instructorId"
                       onClick={() => deleteInstructor(instructor._id)}
                       className="text-red-500 hover:underline"
                     >

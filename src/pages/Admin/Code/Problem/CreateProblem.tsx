@@ -31,12 +31,12 @@ const CreateProblem: React.FC = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    title: "",
-    slug: "",
-    description: "",
+    title: "" as string,
+    slug: "" as string,
+    description: "" as string,
     difficulty: "easy" as Difficulty,
     subject: "Arrays" as Subject, // Default subject
-    constraints: "",
+    constraints: "" as string ,
   });
   const [success, setSuccess] = useState<string | null>(null);
 
@@ -83,6 +83,7 @@ const CreateProblem: React.FC = () => {
 
           {/* Difficulty Select */}
           <select
+          aria-label="difficulty"
             name="difficulty"
             value={formData.difficulty}
             onChange={(e) => setFormData({ ...formData, difficulty: e.target.value as Difficulty })}
@@ -95,6 +96,7 @@ const CreateProblem: React.FC = () => {
 
           {/* Subject Select (New) */}
           <select
+          aria-label="subject"
             name="subject"
             value={formData.subject}
             onChange={(e) => setFormData({ ...formData, subject: e.target.value as Subject })}

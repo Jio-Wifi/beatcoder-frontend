@@ -14,6 +14,7 @@ import {
 import type { Plan, SubscriptionContextProps, Settlement } from "../../../types/course/subscription.types";
 import type { RevenueData } from "../../../types/course/analyatic.types";
 import useAuth from "../../../hooks/auth/useAuth";
+import PageSkeleton from "../../../components/Common/PageSkeleton";
 
 const SubscriptionProvider = ({ children }: { children: ReactNode }) => {
   const { hasRefreshed, isLoggedIn, user } = useAuth();
@@ -152,7 +153,7 @@ const SubscriptionProvider = ({ children }: { children: ReactNode }) => {
   }, [hasRefreshed, isLoggedIn, fetchUserSubscriptionDetails]);
 
   if (!hasRefreshed) {
-    return <div className="p-4 text-center">Checking session...</div>;
+    return <PageSkeleton />
   }
 
   const value: SubscriptionContextProps = {

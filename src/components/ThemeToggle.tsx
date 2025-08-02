@@ -1,4 +1,3 @@
-// src/components/ThemeToggle.tsx
 import useTheme from "../hooks/useTheme";
 import { FaSun, FaMoon } from "react-icons/fa";
 

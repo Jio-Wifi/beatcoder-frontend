@@ -1,4 +1,3 @@
-// src/context/course/InstructorProvider.tsx
 import React, { useState, useCallback, useEffect } from "react";
 import { InstructorContext } from "./InstructorContext";
 import {

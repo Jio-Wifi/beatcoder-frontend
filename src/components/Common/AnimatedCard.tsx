@@ -1,4 +1,3 @@
-// components/common/AnimatedCard.tsx
 import { motion } from "framer-motion";
 import React from "react";
 

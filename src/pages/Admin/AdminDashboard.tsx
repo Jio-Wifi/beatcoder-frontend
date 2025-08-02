@@ -1,4 +1,3 @@
-// src/pages/admin/AdminDashboard.tsx
 import { useEffect, useState } from "react";
 import { FaBook, FaUsers, FaRupeeSign } from "react-icons/fa";
 import AdminStatCard from "../../components/Admin/AdminStatCard";

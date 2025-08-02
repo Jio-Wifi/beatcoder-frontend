@@ -1,4 +1,3 @@
-// src/hooks/useProgress.ts
 import { useContext } from 'react';
 import { ProgressContext } from '../../context/course/progress/ProgressContext';
 

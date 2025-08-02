@@ -1,6 +1,5 @@
-// src/layouts/AdminLayout.tsx
 import { useState } from "react";
-import { Outlet } from "react-router-dom";  // <--- for nested pages
+import { Outlet } from "react-router-dom";  
 import AdminSidebar from "../components/Admin/AdminSidebar";
 import AdminHeader from "../components/Admin/AdminHeader";
 
@@ -9,8 +8,8 @@ const AdminLayout = () => {
 
   return (
     <div className="flex h-screen bg-dime dark:bg-primary">
-      {/* Sidebar (persistent) */}
-      <AdminSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      {/* Sidebar  */}
+   <AdminSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} /> 
 
       {/* Header + Page Content */}
       <div className="flex flex-col flex-1">

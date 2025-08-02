@@ -20,6 +20,7 @@ const AdminHeader = ({ onToggleSidebar }: AdminHeaderProps) => {
     <header className="flex items-center justify-between px-4 py-3 bg-white dark:bg-primary shadow-md">
       {/* Hamburger (for mobile) */}
       <button
+        aria-label="menu"
         className="md:hidden text-primary dark:text-accent"
         onClick={onToggleSidebar}
       >

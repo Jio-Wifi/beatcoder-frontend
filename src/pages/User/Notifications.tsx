@@ -4,15 +4,15 @@ const Notifications = () => (
   <div className="space-y-4">
     <div className="flex justify-between">
       <span>Email Notifications</span>
-      <input type="checkbox" className="accent-secondary" defaultChecked />
+      <input aria-label="emailNotification" type="checkbox" className="accent-secondary" defaultChecked />
     </div>
     <div className="flex justify-between">
       <span>Push Notifications</span>
-      <input type="checkbox" className="accent-secondary" defaultChecked />
+      <input aria-label="notification" type="checkbox" className="accent-secondary" defaultChecked />
     </div>
     <div className="flex justify-between">
       <span>SMS Alerts</span>
-      <input type="checkbox" className="accent-secondary" />
+      <input aria-label="sms" type="checkbox" className="accent-secondary" />
     </div>
   </div>
 );

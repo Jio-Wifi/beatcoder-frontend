@@ -4,7 +4,7 @@ import {
   FaTimes,
   FaPencilAlt,
   FaPaintBrush,
-  FaProjectDiagram,
+  // FaProjectDiagram,
 } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 import CustomLink from "../Custom/CustomLink";

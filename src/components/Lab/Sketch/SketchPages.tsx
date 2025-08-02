@@ -1,78 +1,84 @@
-import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
+import { useState } from "react";
+import { useSketch } from "../../../hooks/Lab/useSketch";
 
 const SketchPages = () => {
-  const [pages, setPages] = useState<string[]>(["Page 1"]);
-  const [activePage, setActivePage] = useState(0);
-  const [renamingIndex, setRenamingIndex] = useState<number | null>(null);
+  const { state, dispatch } = useSketch();
+  const { pages, currentPageId } = state;
+
+  const [renamingId, setRenamingId] = useState<string | null>(null);
   const [renameValue, setRenameValue] = useState("");
 
   const addPage = () => {
-    setPages((prev) => [...prev, `Page ${prev.length + 1}`]);
-    setActivePage(pages.length);
+    const newId = `page-${Date.now()}`;
+    dispatch({
+      type: "ADD_PAGE",
+      payload: {
+        id: newId,
+        name: `Page ${pages.length + 1}`,
+      },
+    });
   };
 
-  const startRenaming = (index: number, name: string) => {
-    setRenamingIndex(index);
+  const switchPage = (id: string) => {
+    dispatch({ type: "SWITCH_PAGE", payload: { id } });
+  };
+
+  const startRenaming = (id: string, name: string) => {
+    setRenamingId(id);
     setRenameValue(name);
   };
 
   const finishRenaming = () => {
-    if (renameValue.trim()) {
-      setPages((prev) =>
-        prev.map((name, i) => (i === renamingIndex ? renameValue.trim() : name))
-      );
-    }
-    setRenamingIndex(null);
+    if (!renameValue.trim() || !renamingId) return;
+    dispatch({
+      type: "RENAME_PAGE",
+      payload: { id: renamingId, name: renameValue.trim() },
+    });
+    setRenamingId(null);
     setRenameValue("");
   };
 
-  const removePage = (index: number) => {
+  const removePage = (id: string) => {
     if (pages.length === 1) return;
-    setPages((prev) => prev.filter((_, i) => i !== index));
-    if (activePage >= pages.length - 1) {
-      setActivePage(pages.length - 2);
-    }
+    dispatch({ type: "REMOVE_PAGE", payload: { id } });
   };
 
   return (
     <div className="h-14 bg-white dark:bg-primary flex items-center gap-2 px-4 border-t dark:border-dime overflow-x-auto">
-      {pages.map((name, i) => (
+      {pages.map((page) => (
         <div
-          key={i}
+          key={page.id}
           className={`flex items-center px-3 py-1 rounded transition ${
-            i === activePage
+            page.id === currentPageId
               ? "bg-accent text-white"
               : "bg-white dark:bg-dime text-black dark:text-white"
           }`}
         >
-          {renamingIndex === i ? (
+          {renamingId === page.id ? (
             <input
-            aria-label="rename"
+              aria-label="rename"
               type="text"
               value={renameValue}
               autoFocus
               onBlur={finishRenaming}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") finishRenaming();
-              }}
+              onKeyDown={(e) => e.key === "Enter" && finishRenaming()}
               onChange={(e) => setRenameValue(e.target.value)}
               className="bg-transparent outline-none w-24 text-sm"
             />
           ) : (
-            <button
-              onClick={() => {
-                setActivePage(i);
-                startRenaming(i, name);
-              }}
-              className="text-sm font-medium truncate text-secondary"
+            <span
+              onClick={() => switchPage(page.id)}
+              onDoubleClick={() => startRenaming(page.id, page.name)}
+              className="text-sm font-medium truncate text-secondary cursor-pointer"
             >
-              {name}
-            </button>
+              {page.name}
+            </span>
           )}
+
           {pages.length > 1 && (
             <button
-              onClick={() => removePage(i)}
+              onClick={() => removePage(page.id)}
               className="ml-2 text-xs hover:text-red-500"
               title="Delete"
             >

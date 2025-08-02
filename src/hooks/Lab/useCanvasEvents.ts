@@ -1,11 +1,21 @@
-import { type RefObject, useEffect } from "react";
+import { type RefObject, useEffect, useMemo } from "react";
 import { useSketch } from "./useSketch";
 import { createElement } from "../../utils/createElement";
+import type { SketchElement } from "../../types/Lab/sketch.types";
+
+const HANDLE_SIZE = 8;
 
 export const useCanvasEvents = (
-  canvasRef: RefObject<HTMLCanvasElement | null>
+  canvasRef: RefObject<HTMLCanvasElement | null>,
+  drawPointsRef: React.MutableRefObject<{ x: number; y: number }[]>
 ) => {
   const { state, dispatch } = useSketch();
+
+  // Get the current page's elements
+  const elements = useMemo(() => {
+  return state.pages.find((p) => p.id === state.currentPageId)?.elements || [];
+}, [state.pages, state.currentPageId]);
+
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -26,20 +36,40 @@ export const useCanvasEvents = (
       };
     };
 
+    const isInResizeHandle = (x: number, y: number, el: SketchElement) => {
+      const handleX = el.x + (el.width || 0);
+      const handleY = el.y + (el.height || 0);
+      return (
+        x >= handleX - HANDLE_SIZE &&
+        x <= handleX + HANDLE_SIZE &&
+        y >= handleY - HANDLE_SIZE &&
+        y <= handleY + HANDLE_SIZE
+      );
+    };
+
     const handleMouseDown = (e: MouseEvent) => {
       const { x, y } = getMousePosition(e);
       startX = x;
       startY = y;
 
-      // Select/Hand tool click: select element if exists
-      if (state.tool === "hand" || state.tool === "select") {
-        const clickedElement = [...state.elements].reverse().find(
-          (el) =>
-            x >= el.x &&
-            x <= el.x + (el.width || 0) &&
-            y >= el.y &&
-            y <= el.y + (el.height || 0)
-        );
+      if (state.tool === "select" || state.tool === "hand") {
+        const clickedElement = [...elements].reverse().find((el) => {
+          const ex = el.x;
+          const ey = el.y;
+          const ew = el.width || 0;
+          const eh = el.height || 0;
+
+          if (isInResizeHandle(x, y, el)) {
+            dispatch({ type: "SELECT_ELEMENT", payload: el.id });
+            dispatch({
+              type: "START_RESIZING",
+              payload: { handle: "bottom-right" },
+            });
+            return true;
+          }
+
+          return x >= ex && x <= ex + ew && y >= ey && y <= ey + eh;
+        });
 
         if (clickedElement) {
           dispatch({ type: "SELECT_ELEMENT", payload: clickedElement.id });
@@ -61,23 +91,42 @@ export const useCanvasEvents = (
         return;
       }
 
-      // Text tool
       if (state.tool === "text") {
-        dispatch({
-          type: "START_CREATING_TEXT",
-          payload: { x, y },
-        });
+        dispatch({ type: "START_CREATING_TEXT", payload: { x, y } });
         return;
       }
 
-      // Start drawing other elements
+      if (state.tool === "draw") {
+        isDrawing = true;
+        drawPointsRef.current = [{ x, y }];
+        return;
+      }
+
+      // Start shape drawing
       isDrawing = true;
     };
 
     const handleMouseMove = (e: MouseEvent) => {
       const { x, y } = getMousePosition(e);
 
-      // Drag selected element
+      if (
+        state.tool === "select" &&
+        state.resizingHandle &&
+        state.selectedElementId
+      ) {
+        const selected = elements.find((el) => el.id === state.selectedElementId);
+        if (selected) {
+          const newWidth = Math.max(5, x - selected.x);
+          const newHeight = Math.max(5, y - selected.y);
+
+          dispatch({
+            type: "RESIZE_ELEMENT",
+            payload: { x: newWidth, y: newHeight },
+          });
+        }
+        return;
+      }
+
       if (
         (state.tool === "hand" || state.tool === "select") &&
         state.isDraggingElement &&
@@ -91,13 +140,20 @@ export const useCanvasEvents = (
             y: y - state.dragOffset.y,
           },
         });
+        return;
+      }
+
+      if (state.tool === "draw" && isDrawing) {
+        drawPointsRef.current.push({ x, y });
       }
     };
 
     const handleMouseUp = (e: MouseEvent) => {
-      const { x, y } = getMousePosition(e);
+      if (state.resizingHandle) {
+        dispatch({ type: "STOP_RESIZING" });
+        return;
+      }
 
-      // Stop dragging
       if (
         (state.tool === "hand" || state.tool === "select") &&
         state.isDraggingElement
@@ -106,32 +162,46 @@ export const useCanvasEvents = (
         return;
       }
 
-      // Text click again
-      if (state.tool === "text") {
-        dispatch({
-          type: "START_CREATING_TEXT",
-          payload: { x, y },
-        });
-        return;
-      }
+      const { x, y } = getMousePosition(e);
 
-      // Finish drawing
       if (!isDrawing) return;
       isDrawing = false;
+
+      if (state.tool === "draw") {
+        const points = [...drawPointsRef.current];
+        drawPointsRef.current = [];
+        if (points.length < 2) return;
+
+        const element: SketchElement = {
+          id: crypto.randomUUID(),
+          type: "draw",
+          x: points[0].x,
+          y: points[0].y,
+          color: state.color,
+          points,
+        };
+
+        dispatch({ type: "ADD_ELEMENT", payload: element });
+        return;
+      }
 
       const width = x - startX;
       const height = y - startY;
 
-      const element = createElement(
-        state.tool,
-        startX,
-        startY,
+      const element = createElement({
+        type: state.tool,
+        x: startX,
+        y: startY,
         width,
         height,
-        state.color
-      );
+        color: state.color,
+        fontSize: state.fontSize,
+        fontFamily: state.fontFamily,
+      });
 
-      dispatch({ type: "ADD_ELEMENT", payload: element });
+      if (element) {
+        dispatch({ type: "ADD_ELEMENT", payload: element });
+      }
     };
 
     canvas.addEventListener("mousedown", handleMouseDown);
@@ -143,14 +213,5 @@ export const useCanvasEvents = (
       canvas.removeEventListener("mousemove", handleMouseMove);
       canvas.removeEventListener("mouseup", handleMouseUp);
     };
-  }, [
-    canvasRef,
-    state.tool,
-    state.color,
-    state.isDraggingElement,
-    state.dragOffset,
-    state.selectedElementId,
-    state.elements,
-    dispatch,
-  ]);
+  }, [canvasRef, state.tool, state.color, state.fontSize, state.fontFamily, state.isDraggingElement, state.dragOffset, state.selectedElementId, state.resizingHandle, state.currentPageId, state.pages, dispatch, drawPointsRef, elements]);
 };

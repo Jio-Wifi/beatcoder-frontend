@@ -6,11 +6,16 @@ import {
   FaPalette,
   FaFont,
   FaHandPaper,
+  FaLongArrowAltRight,
+  FaSlash,
+  FaImage,
 } from "react-icons/fa";
 import { useSketch } from "../../../hooks/Lab/useSketch";
+import { useRef } from "react";
 
 const SketchToolbar = () => {
   const { state, dispatch } = useSketch();
+  const imageInputRef = useRef<HTMLInputElement | null>(null);
 
   const setTool = (tool: typeof state.tool) =>
     dispatch({ type: "SET_TOOL", payload: tool });
@@ -18,63 +23,79 @@ const SketchToolbar = () => {
   const setColor = (color: string) =>
     dispatch({ type: "SET_COLOR", payload: color });
 
+  const toolButton = (
+    icon: React.ReactNode,
+    label: string,
+    toolKey: typeof state.tool,
+    onClick?: () => void
+  ) => (
+    <button
+      aria-label={label}
+      onClick={onClick || (() => setTool(toolKey))}
+      className={`p-2 rounded ${
+        state.tool === toolKey
+          ? "bg-accent dark:text-primary"
+          : "hover:bg-dime"
+      }`}
+    >
+      {icon}
+    </button>
+  );
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const imageSrc = reader.result as string;
+      dispatch({
+        type: "ADD_ELEMENT",
+        payload: {
+          id: crypto.randomUUID(),
+          type: "image",
+          x: 100,
+          y: 100,
+          width: 200,
+          height: 200,
+          color: "#000",
+          imageSrc,
+        },
+      });
+    };
+    reader.readAsDataURL(file);
+  };
+
   return (
-    <div className="absolute top-4 left-4 z-20 flex gap-2 bg-white dark:bg-primary p-2 rounded shadow items-center dark:text-accent">
-      {/* Select Tool */}
-      <button
-        aria-label="select"
-        onClick={() => setTool("select")}
-        className={`p-2 rounded ${state.tool === "select" ? "bg-accent dark:text-primary" : "hover:bg-dime"}`}
-      >
-        <FaMousePointer />
-      </button>
+    <div className="absolute top-4 left-4 z-20 flex flex-wrap gap-2 bg-white dark:bg-primary p-2 rounded shadow items-center dark:text-accent">
+      {toolButton(<FaMousePointer />, "select", "select")}
+      {toolButton(<FaHandPaper />, "hand", "hand")}
+      {toolButton(<FaPen />, "draw", "draw")}
+      {toolButton(<FaCircle />, "circle", "circle")}
+      {toolButton(<FaSquare />, "rectangle", "rectangle")}
+      {toolButton(<FaSlash />, "line", "line")}
+      {toolButton(<FaLongArrowAltRight />, "arrow", "arrow")}
+     {toolButton(<FaFont />, "text", "text", () => {
+  setTool("text");
+  dispatch({ type: "START_CREATING_TEXT", payload: { x: 100, y: 100 } }); // Optional: Set default position
+})}
 
-      {/* Hand (Pan/Move) Tool */}
-      <button
-        aria-label="hand"
-        onClick={() => setTool("hand")}
-        className={`p-2 rounded ${state.tool === "hand" ? "bg-accent dark:text-primary" : "hover:bg-dime"}`}
-      >
-        <FaHandPaper />
-      </button>
 
-      {/* Draw Tool */}
-      <button
-        aria-label="draw"
-        onClick={() => setTool("draw")}
-        className={`p-2 rounded ${state.tool === "draw" ? "bg-accent dark:text-primary" : "hover:bg-dime"}`}
-      >
-        <FaPen />
-      </button>
+      {/* 🖼️ Image tool with upload */}
+      {toolButton(<FaImage />, "image", "image", () => {
+        imageInputRef.current?.click(); // Trigger hidden input
+      })}
 
-      {/* Circle Tool */}
-      <button
-        aria-label="circle"
-        onClick={() => setTool("circle")}
-        className={`p-2 rounded ${state.tool === "circle" ? "bg-accent dark:text-primary" : "hover:bg-dime"}`}
-      >
-        <FaCircle />
-      </button>
+      <input
+        aria-label="file"
+        type="file"
+        accept="image/*"
+        ref={imageInputRef}
+        onChange={handleImageUpload}
+        className="hidden"
+      />
 
-      {/* Rectangle Tool */}
-      <button
-        aria-label="rectangle"
-        onClick={() => setTool("rectangle")}
-        className={`p-2 rounded ${state.tool === "rectangle" ? "bg-accent dark:text-primary" : "hover:bg-dime"}`}
-      >
-        <FaSquare />
-      </button>
-
-      {/* Text Tool */}
-      <button
-        aria-label="text"
-        onClick={() => setTool("text")}
-        className={`p-2 rounded ${state.tool === "text" ? "bg-accent dark:text-primary" : "hover:bg-dime"}`}
-      >
-        <FaFont />
-      </button>
-
-      {/* Color Picker */}
+      {/* 🎨 Color Picker */}
       <div className="flex items-center gap-4 ml-2">
         <FaPalette className="text-xl" />
         <input

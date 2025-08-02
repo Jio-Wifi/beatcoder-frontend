@@ -139,10 +139,10 @@ const Draw = () => {
     <div className="flex flex-col h-[calc(100vh-72px)] overflow-y-auto custom-scroll">
       <div className="flex flex-grow">
         <LabSidebar />
-        <div className="flex-grow relative bg-dime dark:bg-dark">
+        <div className="flex-grow relative z-0 bg-dime dark:bg-dark">
           <CanvasToolbox currentTool={tool} setTool={setTool} color={color} setColor={setColor} />
           <canvas ref={canvasRef} className="w-full h-[calc(100vh-96px)]" />
-          <div className="absolute top-4 right-4 z-50 flex gap-2">
+          <div className="absolute top-20 md:top-4 right-4 z-50 flex gap-2">
             <button onClick={handleClear} className="px-4 py-1 rounded bg-danger text-white hover:bg-red-700">Clear</button>
             <button onClick={handleDownload} className="px-4 py-1 rounded bg-primary text-white hover:bg-secondary">Download</button>
           </div>

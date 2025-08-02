@@ -17,20 +17,28 @@ const TopRightActions = () => {
   };
 
   const handleDownload = () => {
-    exportAsImage(state.elements, state.fileName);
+    if (!state.elements.length) {
+      alert("Nothing to export!");
+      return;
+    }
+
+    const name = state.fileName?.trim() || "sketch.png";
+    exportAsImage(state.elements, name);
   };
 
   return (
-    <div className="absolute top-4 right-4 z-50 flex flex-col md:flex-row gap-2">
+    <div className="absolute top-20 md:top-4 right-4 z-50 flex flex-col md:flex-row gap-2">
       <button
         onClick={handleClear}
         className="px-5 py-2 rounded bg-danger text-white hover:bg-red-700"
+        aria-label="Clear Canvas"
       >
         Clear
       </button>
       <button
         onClick={handleDownload}
         className="px-5 py-2 rounded bg-primary text-white hover:bg-secondary"
+        aria-label="Download Canvas"
       >
         Download
       </button>
@@ -44,7 +52,7 @@ const Sketch = () => {
       <div className="flex flex-col h-[calc(100vh-72px)] overflow-y-auto custom-scroll">
         <div className="flex flex-grow">
           <LabSidebar />
-          <div className="flex-grow relative bg-dime dark:bg-dark">
+          <div className="flex-grow relative z-0 bg-dime dark:bg-dark">
             <SketchToolbar />
             <SketchCanvas />
             <TopRightActions />

@@ -104,7 +104,7 @@ const CreateProblem: React.FC = () => {
             required
           >
             {subjects.map((subj) => (
-              <option key={subj} value={subj}>
+              <option key={subj} value={subj} className="dark:bg-primary">
                 {subj}
               </option>
             ))}

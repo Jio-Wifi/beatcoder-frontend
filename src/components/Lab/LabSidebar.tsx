@@ -4,7 +4,7 @@ import {
   FaTimes,
   FaPencilAlt,
   FaPaintBrush,
-  // FaProjectDiagram,
+  FaProjectDiagram,
 } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 import CustomLink from "../Custom/CustomLink";
@@ -42,14 +42,14 @@ const LabSidebar = () => {
           >
             <FaPaintBrush /> <span>Draw</span>
           </CustomLink>
-          {/* <CustomLink
+          <CustomLink
             to="/explore/flow"
             className={`${baseClass} ${textClass} ${hoverClass} ${
               isActive("/explore/flow") ? activeClass : ""
             }`}
           >
             <FaProjectDiagram /> <span>Flow Diagram</span>
-          </CustomLink> */}
+          </CustomLink>
         </nav>
       </aside>
 

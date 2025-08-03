@@ -10,35 +10,27 @@ const Breif = () => {
   return (
     <div className="prose max-w-6xl px-4 py-10 mx-auto dark:prose-invert">
       {/* // Introduction Section  */}
-        <IntroductionSection />
+      <IntroductionSection />
 
-   {/* // Api Workflow  */}
+      {/* // Architecture Layers  */}
+      <ArchitectureLayers />
 
-{/* // Architecture Layers  */}
-<ArchitectureLayers />
+      {/* // Technology Stack  */}
+      <TechnologyStack />
 
-
-
-{/* // Technology Stack  */}
-  <TechnologyStack />
       {/* // Key Features Section */}
+      <KeyFeatures />
 
-     <KeyFeatures />
+      {/* // UI & UX Section  */}
 
-       {/* // UI & UX Section  */}
+      <UIUXSection />
 
-    <UIUXSection />
-
-
-      
       {/* // Backend Workflow */}
 
       <BackendWorkflowSection />
-     
-   {/* // Database Design  */}
-   <DatabaseDesignSection />
 
-     
+      {/* // Database Design  */}
+      <DatabaseDesignSection />
     </div>
   );
 };

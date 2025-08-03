@@ -19,7 +19,7 @@ import {
   FaUsers,
 } from "react-icons/fa";
 import AnimatedSection from "../../components/Common/AnimatedSection";
-import AnimatedCard from "../../components/Common/AnimatedCard";
+
 
 const features = [
   {
@@ -117,14 +117,13 @@ const features = [
 const KeyFeatures = () => {
   return (
     <AnimatedSection delay={0.3}>
-    <section className="py-12 px-6 mt-4 bg-white dark:bg-primary">
+    <section className="px-6 py-16 mt-4 bg-white dark:bg-primary">
       <h2 className="text-3xl font-bold text-center dark:text-light text-primary mb-10">
         🔑 Key Features of BeatCoder
       </h2>
 
       <div className="grid grid-cols-1 rounded-2xl sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {features.map((feature, idx) => (
-        <AnimatedCard key={idx} className="!bg-transparent !shadow-none">
             <div
             key={idx}
             className="bg-dime dark:bg-dark/90 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300"
@@ -137,7 +136,6 @@ const KeyFeatures = () => {
               {feature.desc}
             </p>
           </div>
-        </AnimatedCard>
         ))}
       </div>
     </section>

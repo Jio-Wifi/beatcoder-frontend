@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FiSend, FiStopCircle } from "react-icons/fi";
-import CustomTextarea from "../Custom/CustomTextArea";
-import CustomButton from "../Custom/CustomButton";
+import CustomTextarea from "../../Custom/CustomTextArea";
+import CustomButton from "../../Custom/CustomButton";
 
 interface GeminiInputProps {
   onSubmit: (prompt: string) => void;

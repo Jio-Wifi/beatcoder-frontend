@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import GeminiInput from "./GeminiInput";
 import { motion } from "framer-motion";
 import { FiShare2, FiRefreshCcw } from "react-icons/fi";
+import GeminiInput from "./GeminiInput";
 
 interface Message {
   role: "user" | "ai";
@@ -27,7 +27,7 @@ const GeminiContainer: React.FC = () => {
     setStopRequested(false);
     stopRef.current = false;
 
-    const { generateText } = await import("../../services/gemini");
+    const { generateText } = await import("../../../services/gemini");
     const result = await generateText(prompt);
 
     const lines = result.split("\n").filter((line) => line.trim() !== "");
@@ -70,7 +70,7 @@ const GeminiContainer: React.FC = () => {
   const lastAiMessage = [...messages].reverse().find((m) => m.role === "ai");
 
   return (
-    <div className="w-full max-w-lg h-[600px] flex flex-col rounded-2xl shadow-xl backdrop-blur-md animate-fade-up
+    <div className="w-full max-w-[260px]  h-[450px] md:max-w-2xl md:h-[600px] flex flex-col shadow-xl backdrop-blur-md animate-fade-up
       bg-white text-dark dark:bg-dark dark:text-light">
       
       {/* Header */}

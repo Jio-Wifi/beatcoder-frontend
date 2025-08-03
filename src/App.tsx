@@ -54,9 +54,9 @@ import ForgotPassword from "./pages/Auth/ForgotPassword";
 import ResetPassword from "./pages/Auth/ResetPassword";
 
 import { useState } from "react";
-import OverlayModal from "./components/Ai/OverlayModal";
-import FloatingAIButton from "./components/Ai/FloatingAIButton";
-import GeminiContainer from "./components/Ai/GeminiContainer";
+import OverlayModal from "./components/Ai/Chat/OverlayModal";
+import FloatingAIButton from "./components/Ai/Chat/FloatingAIButton";
+// import GeminiContainer from "./components/Ai/Chat/GeminiContainer";
 import SubmissionDetails from "./components/problem/Submissions/SubmissionDetails";
 import StudyPlan from "./pages/Problem/StudyPlan/StudyPlan";
 import StudyPlanDetails from "./pages/Problem/StudyPlan/StudyPlanDetails";
@@ -65,6 +65,7 @@ import EditorLayout from "./pages/Compiler/EditorLayout";
 import Sketch from "./pages/Lab/Sketch/Sketch";
 import Draw from "./pages/Lab/Draw/Draw";
 import Flow from "./pages/Lab/Flow/Flow";
+import TabLayout from "./components/Ai/Tabs/TabLayout";
 
 const App = () => {
   const location = useLocation();
@@ -80,7 +81,7 @@ const App = () => {
 
       {/* Gemini AI Chat Modal */}
       <OverlayModal isOpen={showGemini} onClose={() => setShowGemini(false)}>
-        <GeminiContainer />
+        <TabLayout />
       </OverlayModal>
 
       <Routes>

@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { FiX } from "react-icons/fi";
+import React, { useEffect, useState } from "react";
+import { FiX,  FiMessageSquare } from "react-icons/fi";
 import { useChat } from "../../hooks/chat/useChat";
 import VideoGrid from "./VideoGrid";
 import ParticipantList from "./ParticipantList";
@@ -26,6 +26,7 @@ const RoomChatOverlay: React.FC<Props> = ({ onClose }) => {
   } = useChat();
 
   const { user } = useUser();
+  const [sidebarOpen, setSidebarOpen] = useState(false); // Mobile toggle
 
   useEffect(() => {
     if (!roomId && user?.name) {
@@ -56,7 +57,7 @@ const RoomChatOverlay: React.FC<Props> = ({ onClose }) => {
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden relative">
         {/* Video Section */}
         <div className="flex-1 flex flex-col">
           <VideoGrid
@@ -68,12 +69,35 @@ const RoomChatOverlay: React.FC<Props> = ({ onClose }) => {
         </div>
 
         {/* Sidebar */}
-        <div className="w-80 dark:bg-primary border-l border-gray-200 flex flex-col">
+        <div
+          className={`
+            fixed md:static top-0 right-0 h-full w-72 md:w-80 bg-white dark:bg-primary
+            border-l border-gray-200 shadow-lg z-40 transition-transform duration-300
+            flex flex-col
+            ${sidebarOpen ? "translate-x-0" : "translate-x-full"} 
+            md:translate-x-0
+          `}
+        >
+          <div className="flex justify-between items-center p-3 border-b border-gray-200 md:hidden">
+            <span className="font-semibold text-gray-700 dark:text-dime">Sidebar</span>
+            <button aria-label="cross" onClick={() => setSidebarOpen(false)} className="text-gray-600 hover:text-red-500">
+              <FiX size={20} />
+            </button>
+          </div>
           <ParticipantList users={users} />
           <div className="flex-1 border-t overflow-y-auto custom-scroll border-gray-200">
             <ChatPanel />
           </div>
         </div>
+
+        {/* Mobile Toggle Button */}
+        <button
+        aria-label="toggle"
+          onClick={() => setSidebarOpen(true)}
+          className="absolute bottom-20 right-4 z-30 p-3 bg-primary text-white rounded-full shadow-lg md:hidden"
+        >
+          <FiMessageSquare size={20} />
+        </button>
       </div>
 
       {/* Controls */}

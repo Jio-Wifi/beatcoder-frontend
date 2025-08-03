@@ -32,9 +32,9 @@ const MonacoEditor: React.FC<MonacoEditorProps> = ({
   }, []);
 
   return (
-    <div className="h-full w-full bg-white dark:bg-primary rounded overflow-hidden">
+    <div className="md:h-full w-full bg-white dark:bg-primary rounded overflow-hidden">
       <Editor
-        height="100%"
+        height="250px"
         theme={theme}
         language={language}
         value={content}

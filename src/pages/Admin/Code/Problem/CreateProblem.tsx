@@ -89,9 +89,9 @@ const CreateProblem: React.FC = () => {
             onChange={(e) => setFormData({ ...formData, difficulty: e.target.value as Difficulty })}
             className="w-full p-2 border rounded-md focus:ring-2 focus:ring-accent"
           >
-            <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
-            <option value="hard">Hard</option>
+            <option value="easy" className="dark:text-primary">Easy</option>
+            <option value="medium" className="dark:text-primary">Medium</option>
+            <option value="hard" className="dark:text-primary">Hard</option>
           </select>
 
           {/* Subject Select (New) */}

@@ -27,7 +27,7 @@ const TopRightActions = () => {
   };
 
   return (
-    <div className="absolute top-20 md:top-4 right-4 z-50 flex flex-col md:flex-row gap-2">
+    <div className="absolute top-24 sm:mt-14 md:top-4 md:mt-0 right-4 z-50 flex flex-col md:flex-row gap-2">
       <button
         onClick={handleClear}
         className="px-5 py-2 rounded bg-danger text-white hover:bg-red-700"

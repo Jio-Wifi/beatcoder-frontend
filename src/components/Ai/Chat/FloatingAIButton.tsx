@@ -10,7 +10,7 @@ const FloatingAIButton: React.FC<FloatingAIButtonProps> = ({ onClick }) => {
     <button
       onClick={onClick}
       aria-label="Open Gemini AI"
-      className="fixed bottom-24 flex justify-center items-center  right-6 w-14 h-14 rounded-full shadow-lg z-50 text-2xl
+      className="fixed bottom-32 md:bottom-24 flex justify-center items-center  right-6 w-14 h-14 rounded-full shadow-lg z-50 text-2xl
         bg-accent text-dark hover:bg-secondary hover:text-light 
         dark:bg-secondary dark:text-light dark:hover:bg-accent
         transition-all duration-300"

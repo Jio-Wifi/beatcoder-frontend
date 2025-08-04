@@ -6,6 +6,7 @@ import type { Problem } from "../types/code/problem.types";
 import CustomMessage from "./Custom/CustomMessage";
 import useAuth from "../hooks/auth/useAuth";
 import RoomChatOverlay from "./chat/RoomChatOverlay";
+import AiAssistance from "./Ai/AiAssistance/AiAssistance";
 
 interface CodeEditorPanelProps {
   problem: Problem;
@@ -140,6 +141,8 @@ const CodeEditorPanel = ({
         </button>
         )
        }
+
+        <AiAssistance />
 
         {/* Fullscreen Toggle */}
         <button

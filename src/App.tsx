@@ -66,6 +66,7 @@ import Sketch from "./pages/Lab/Sketch/Sketch";
 import Draw from "./pages/Lab/Draw/Draw";
 import Flow from "./pages/Lab/Flow/Flow";
 import TabLayout from "./components/Ai/Tabs/TabLayout";
+// import AiAssistance from "./components/Ai/AiAssistance/AiAssistance";
 
 const App = () => {
   const location = useLocation();
@@ -75,6 +76,7 @@ const App = () => {
   return (
     <>
       {!hideNavbar && <Navbar />}
+      {/* <AiAssistance /> */}
 
       {/* Floating Chat Button */}
       <FloatingAIButton onClick={() => setShowGemini(true)} />
